@@ -1,6 +1,40 @@
-let button_ins = document.getElementById("invis");
-const info_cont = document.querySelectorAll('.info_container');
+const token = "7356590127:AAGh-4dEV8rzcnV-bB3ouD7OjQVgklq4Qvg"
+const URL_API = `https://api.telegram.org/bot${token}/sendMessage`
+const chatId ="-4584119608"
 
-button_ins.addEventListener("click", () => {
-    info_cont.forEach(element => element.remove());
-});
+const send = async (e) => {
+    console.log(e)
+    e.preventDefault();
+    const [first, second, email, phone, message] = [e.target[0].value, e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
+    const text = `Name: ${first} ${second} \nemail: ${email}\nPhone: ${phone}\nmessage: ${message}\n: form: contact us`
+    await fetch(URL_API, {
+        method:'POST',
+        headers: {"Content-type": "application/json"},
+        body: JSON.stringify({chat_id: chatId, text})
+    })
+    e.target[0].value = ''
+    e.target[1].value = ''
+    e.target[2].value = ''
+    e.target[3].value = ''
+    e.target[4].value = ''
+}
+
+const send2 = async (e) => {
+    console.log(e)
+    e.preventDefault();
+    const [first, second, email, phone, message] = [e.target[0].value, e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
+    const text = `Name: ${first} ${second} \nemail: ${email}\nPhone: ${phone}\nform: order`
+    await fetch(URL_API, {
+        method:'POST',
+        headers: {"Content-type": "application/json"},
+        body: JSON.stringify({chat_id: chatId, text})
+    })
+    e.target[0].value = ''
+    e.target[1].value = ''
+    e.target[2].value = ''
+    e.target[3].value = ''
+    e.target[4].value = ''
+}
+
+document.querySelector("#form").addEventListener("submit", send)
+document.querySelector("#form2").addEventListener("submit", send2)
